@@ -1,0 +1,27 @@
+{
+  "name": "hapi-overflow",
+  "version": "1.0.0",
+  "description": "A copy of stackoverflow",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon",
+    "lint":"standard",
+    "lint-fix":"standard --fix",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Hapi",
+    "-",
+    "Stack",
+    "Overflow"
+  ],
+  "author": "Nicolas Scandizzo",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^2.0.6",
+    "standard": "^16.0.3"
+  },
+  "dependencies": {
+    "@hapi/hapi": "^20.0.2"
+  }
+}
