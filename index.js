@@ -21,8 +21,14 @@ const server = Hapi.server({
 async function init() {
 
   try {
-    await server.register(inert)
-    await server.register(vision)
+    await server.register(inert);
+    await server.register(vision);
+
+    server.state('user', {
+      ttl: 1000 * 60 * 60 * 24 * 7, //time to live msec*sec*min*hs*day
+      isSecure: process.env.NODE_ENV === 'prod',
+      encoding: 'base64json'
+    })
 
     server.views({
       engines: {
@@ -32,16 +38,16 @@ async function init() {
       path: 'views',
       layout: true,
       layoutPath: 'views'
-    })
+    });
 
-    server.route(routes)
+    server.route(routes);
 
-    await server.start()
+    await server.start();
 
   } catch (error) {
     console.error(error);
     process.exit(1)
-  }
+  };
   console.log(`Server listening on port: ${server.info.uri}`);
 };
 
