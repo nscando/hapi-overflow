@@ -17,21 +17,42 @@ module.exports =
       path: '/register',
       handler: site.register
     },
+    {
+      method: 'GET',
+      path: '/login',
+      handler: site.login
+    },
 
     {
+      path: '/validate-user',
+      method: 'POST',
+      options: {
+        validate: {
+          payload: joi.object({
+            email: joi.string().email().required(),
+            password: joi.string().required().min(6).pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'))
+          })
+        }
+      },
+      handler: user.validateUser
+    },
+
+    {
+      path: '/create-user',
       method: 'POST',
       options: {
         validate: {
           payload: joi.object({
             name: joi.string().required().min(3),
             email: joi.string().email().required(),
-            password: joi.string().required().min(6)
+            password: joi.string().required().min(6).pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'))
           })
         }
       },
-      path: '/create-user',
       handler: user.createUser
     },
+
+
 
     {
       method: 'GET',

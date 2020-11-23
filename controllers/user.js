@@ -13,6 +13,17 @@ async function createUser(req, h) {
      return h.response(`User created ID: ${result}`);
 };
 
+async function validateUser(req, h) {
+     let result;
+     try {
+          result = await users.validateUser(req.payload)
+     } catch (error) {
+          return h.response('Problems with validate user!').code(500)
+     }
+     return result;
+}
+
 module.exports = {
      createUser: createUser,
+     validateUser: validateUser,
 }
