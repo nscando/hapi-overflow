@@ -1,6 +1,5 @@
 'use strict'
 
-const { server } = require("@hapi/hapi");
 
 function home(req, h) {
      return h.view('index', {
@@ -10,6 +9,9 @@ function home(req, h) {
 };
 
 function register(req, h) {
+     if (req.state.user) {
+          return h.redirect('/')
+     }
      return h.view('register', {
           title: 'Registro',
           user: req.state.user
@@ -17,6 +19,9 @@ function register(req, h) {
 };
 
 function login(req, h) {
+     if (req.state.user) {
+          return h.redirect('/')
+     }
      return h.view('login', {
           title: 'Login',
           user: req.state.user

@@ -28,7 +28,7 @@ async function init() {
       ttl: 1000 * 60 * 60 * 24 * 7, //time to live msec*sec*min*hs*day
       isSecure: process.env.NODE_ENV === 'prod',
       encoding: 'base64json'
-    })
+    });
 
     server.views({
       engines: {
@@ -50,5 +50,13 @@ async function init() {
   };
   console.log(`Server listening on port: ${server.info.uri}`);
 };
+
+process.on('unhandledRejection', error => {
+  console.error('[UnhandledRejection]', error.message, error);
+});
+
+process.on('uncaughtException', error => {
+  console.error('[UncaughtException]', error.message, error);
+});
 
 init();

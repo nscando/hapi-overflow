@@ -36,7 +36,8 @@ module.exports =
           payload: joi.object({
             email: joi.string().email().required(),
             password: joi.string().required().min(6).pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'))
-          })
+          }),
+          failAction: user.failValidation
         }
       },
       handler: user.validateUser
@@ -51,14 +52,12 @@ module.exports =
             name: joi.string().required().min(3),
             email: joi.string().email().required(),
             password: joi.string().required().min(6).pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'))
-          })
+          }),
+          failAction: user.failValidation
         }
       },
       handler: user.createUser
     },
-
-
-
     {
       method: 'GET',
       path: '/{param*}',
@@ -69,5 +68,5 @@ module.exports =
         }
       }
     }
-  ]
+  ];
 
