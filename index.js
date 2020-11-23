@@ -1,7 +1,11 @@
 'use strict'
 const Hapi = require('@hapi/hapi');
+const handlebars = require('handlebars');
 const inert = require('inert');
 const path = require('path');
+const vision = require('vision');
+
+
 
 const server = Hapi.server({
   port: process.env.PORT || 3000,
@@ -17,12 +21,44 @@ async function init() {
 
   try {
     await server.register(inert)
+    await server.register(vision)
+
+    server.views({
+      engines: {
+        hbs: handlebars
+      },
+      relativeTo: __dirname,
+      path: 'views',
+      layout: true,
+      layoutPath: 'views'
+    })
 
     server.route({
       method: 'GET',
-      path: '/home',
+      path: '/',
       handler: (req, h) => {
-        return h.file('index.html')
+        return h.view('index', {
+          title: 'Home'
+        })
+      }
+    });
+
+    server.route({
+      method: 'GET',
+      path: '/register',
+      handler: (req, h) => {
+        return h.view('register', {
+          title: 'Registro'
+        })
+      }
+    });
+
+    server.route({
+      method: 'POST',
+      path: '/create-user',
+      handler: (req, h) => {
+        console.log(req.payload);
+        return 'Usuario creado con exito'
       }
     });
 
