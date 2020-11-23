@@ -1,10 +1,10 @@
 'use strict'
 const Hapi = require('@hapi/hapi');
 const handlebars = require('handlebars');
-const inert = require('inert');
+const inert = require('@hapi/inert');
 const path = require('path');
 const routes = require('./routes');
-const vision = require('vision');
+const vision = require('@hapi/vision');
 
 
 
