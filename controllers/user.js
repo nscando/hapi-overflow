@@ -4,14 +4,19 @@ const { users } = require('../models/index');
 
 async function createUser(req, h) {
      let result
-
      try {
           result = await users.create({ ...req.payload })
      } catch (error) {
           console.error(error);
-          return h.response('Problems with create user!').code(500)
+          return h.view('register', {
+               title: 'Register',
+               error: 'Create user error!'
+          })
      }
-     return h.response(`User created ID: ${result}`);
+     return h.view('register', {
+          title: 'Register',
+          succes: 'User created succes!'
+     });
 };
 
 async function logout(req, h) {
@@ -23,10 +28,16 @@ async function validateUser(req, h) {
      try {
           result = await users.validateUser(req.payload)
           if (!result) {
-               return h.response(`Error, wrong email or password!`).code(401)
+               return h.view('login', {
+                    title: 'Login',
+                    error: 'You entered an incorrect username or password. Please try again.'
+               })
           }
      } catch (error) {
-          return h.response('Problems with validate user!').code(500)
+          return h.view('login', {
+               title: 'Login',
+               error: 'Validation fail.'
+          })
      }
 
      return h.redirect('/').state('user', {

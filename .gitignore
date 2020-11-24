@@ -2,4 +2,5 @@ node_modules
 .vscode
 .config
 config
-/mnt/c/Users/nas/desktop/proyectosplatzi/backendjs/hapi/hapi-overflow/config/firebase.json
+
+firebase.json

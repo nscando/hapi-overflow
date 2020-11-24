@@ -60,13 +60,18 @@ module.exports =
     },
     {
       method: 'GET',
-      path: '/{param*}',
+      path: '/assets/{param*}',
       handler: {
         directory: {
           path: '.',
           index: ['index.html']
         }
       }
+    },
+    {
+      method: ['GET', 'POST'],
+      path: '/{any*}',
+      handler: site.notFound
     }
   ];
 
