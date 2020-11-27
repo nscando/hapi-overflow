@@ -47,7 +47,16 @@ async function validateUser(req, h) {
 }
 
 function failValidation(req, h, err) {
-     return Boom.badRequest('Fail validation', req.payload, err)
+     const templates = {
+          '/create-user': 'register',
+          '/validate-user': 'login'
+     };
+
+     return h.view(templates[req.path], {
+          title: 'Validation Error',
+          error: 'You have entered an invalid data. Please try again.'
+     }).code(400).takeover();
+
 }
 
 module.exports = {
