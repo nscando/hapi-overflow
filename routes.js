@@ -23,6 +23,13 @@ module.exports =
       method: 'GET',
       handler: site.login
     },
+
+    {
+      path: '/question/{id}',
+      method: 'GET',
+      handler: site.viewQuestion
+    },
+
     {
       path: '/logout',
       method: 'GET',

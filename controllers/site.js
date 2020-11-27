@@ -35,6 +35,26 @@ function login(req, h) {
      })
 };
 
+async function viewQuestion(req, h) {
+     let data;
+
+     try {
+          data = await questions.getOne(req.params.id)
+          if (!data) {
+               return notFound(req, h);
+          }
+     } catch (error) {
+          console.error(error);
+     }
+
+     return h.view('question', {
+          title: 'Detalles de la pregunta',
+          user: req.state.user,
+          question: data,
+          key: req.params.id
+     })
+};
+
 function notFound(req, h) {
      return h.view('404', {}, { layout: 'error' }).code(404)
 };
@@ -59,6 +79,7 @@ function ask(req, h) {
 }
 
 module.exports = {
+     viewQuestion: viewQuestion,
      ask: ask,
      register: register,
      home: home,
