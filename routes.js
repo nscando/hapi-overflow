@@ -81,7 +81,8 @@ module.exports =
         validate: {
           payload: joi.object({
             title: joi.string().required(),
-            description: joi.string().required()
+            description: joi.string().required(),
+
           }),
           failAction: user.failValidation
         }
@@ -102,6 +103,12 @@ module.exports =
         }
       },
       handler: question.anwerQuestion
+    },
+
+    {
+      method: 'GET',
+      path: '/answer/{questionId}/{answerId}',
+      handler: question.setAnswerRight
     },
 
     {
