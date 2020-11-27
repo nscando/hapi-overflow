@@ -2,6 +2,7 @@
 const Hapi = require('@hapi/hapi');
 const handlebars = require('./lib/helpers');
 const inert = require('@hapi/inert');
+const methods = require('./lib/methods');
 const path = require('path');
 const routes = require('./routes');
 const site = require('./controllers/site');
@@ -25,6 +26,8 @@ async function init() {
   try {
     await server.register(inert);
     await server.register(vision);
+
+    server.method('setAnswerRight', methods.setAnswerRight);
 
     server.state('user', {
       ttl: 1000 * 60 * 60 * 24 * 7, //time to live msec*sec*min*hs*day
