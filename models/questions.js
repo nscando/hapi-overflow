@@ -27,12 +27,10 @@ class Questions {
      async getOne(id) {
           const query = await this.collection.child(id).once('value');
           const data = query.val();
-          const orderedAnswers = {};
-          Object.keys(data.answers).reverse().map(key => orderedAnswers[key] = data.answers[key])
-          return {
-               ...data,
-               answers: orderedAnswers,
-          };
+
+          return data
+
+
      };
 
      async answer(data, user) {
