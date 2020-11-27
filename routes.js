@@ -90,6 +90,21 @@ module.exports =
     },
 
     {
+      path: '/answer-question',
+      method: 'POST',
+      options: {
+        validate: {
+          payload: joi.object({
+            answer: joi.string().required(),
+            id: joi.string().required()
+          }),
+          failAction: user.failValidation
+        }
+      },
+      handler: question.anwerQuestion
+    },
+
+    {
       method: 'GET',
       path: '/assets/{param*}',
       handler: {
