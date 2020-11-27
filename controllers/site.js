@@ -30,7 +30,7 @@ function login(req, h) {
 
 function notFound(req, h) {
      return h.view('404', {}, { layout: 'error' }).code(404)
-}
+};
 
 function fileNotFound(req, h) {
      const response = req.response
@@ -38,9 +38,21 @@ function fileNotFound(req, h) {
           return h.view('404', {}, { layout: 'error' }).code(404)
      }
      return h.continue;
+};
+
+function ask(req, h) {
+     if (!req.state.user) {
+          return h.redirect('/login')
+     }
+
+     return h.view('ask', {
+          title: 'Crear pregunt',
+          user: req.state.user
+     })
 }
 
 module.exports = {
+     ask: ask,
      register: register,
      home: home,
      login: login,
