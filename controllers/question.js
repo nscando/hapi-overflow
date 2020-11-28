@@ -20,9 +20,9 @@ async function createQuestion(req, h) {
                await write(join(__dirname, '..', 'public', 'uploads', filename), req.payload.image)
           }
           result = await questions.create(req.payload, req.state.user, filename)
-          console.log(`Question created - ID: ${result}`);
+          req.log('info', `Question created - ID: ${result}`)
      } catch (error) {
-          console.error(`An error has ocurred: ${error}`);
+          req.log('error', `An error has ocurred: ${error}`);
 
           return h.view('ask', {
                title: 'Create question',
@@ -37,9 +37,7 @@ async function anwerQuestion(req, h) {
      if (!req.state.user) {
           return h.redirect('/login')
      }
-
      let result;
-
      try {
           result = await questions.answer(req.payload, req.state.user);
           console.log(`Respuesta creada con exito ID: ${result}`);
@@ -53,7 +51,6 @@ async function setAnswerRight(req, h) {
      if (!req.state.user) {
           return h.redirect('/login')
      }
-
      let result
      try {
           result = await req.server.methods.setAnswerRight(req.params.questionId, req.params.answerId, req.state.user)
@@ -61,7 +58,6 @@ async function setAnswerRight(req, h) {
      } catch (error) {
           console.error(error)
      }
-
      return h.redirect(`/question/${req.params.questionId}`)
 }
 
