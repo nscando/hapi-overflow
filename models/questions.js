@@ -7,16 +7,22 @@ class Questions {
           this.collection = this.ref.child('questions')
      };
 
-     async create(data, user) {
-          const ask = {
-               ...data
+     async create(info, user, filename) {
+          const data = {
+               description: info.description,
+               title: info.title,
+               owner: user
           }
-          ask.owner = user;
-          const question = this.collection.push();
-          question.set(ask);
 
-          return question.key;
-     };
+          if (filename) {
+               data.filename = filename
+          }
+
+          const question = this.collection.push()
+          question.set(data)
+
+          return question.key
+     }
 
      async getLast(amount) {
           const query = await this.collection.limitToLast(amount).once('value');
