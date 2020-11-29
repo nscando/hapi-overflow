@@ -1,6 +1,5 @@
 node_modules
 .vscode
 .config
-config
 
 firebase.json

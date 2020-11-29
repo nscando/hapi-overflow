@@ -1,5 +1,9 @@
 'use strict'
 const Hapi = require('@hapi/hapi');
+const Blankie = require('blankie');
+const Scooter = require('@hapi/scooter');
+const crumb = require('crumb');
+const hapiDevErrors = require('hapi-dev-errors');
 const handlebars = require('./lib/helpers');
 const inert = require('@hapi/inert');
 const good = require('@hapi/good');
@@ -43,6 +47,33 @@ async function init() {
         },
       },
     });
+    await server.register({
+      plugin: crumb,
+      options: {
+        cookieOptions: {
+          isSecure: process.env.NODE_ENV === 'prod'
+        }
+      }
+    });
+
+    await server.register([Scooter, {
+      plugin: Blankie,
+      options: {
+        defaultSrc: `'self' 'unsafe-inline'`,
+        styleSrc: `'self' 'unsafe-inline' https://maxcdn.bootstrapcdn.com`,
+        fontSrc: `'self' 'unsafe-inline' data:`,
+        scriptSrc: `'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://maxcdn.bootstrapcdn.com/ https://code.jquery.com/`,
+        generateNonces: false
+      }
+    }
+    ]);
+
+    await server.register({
+      plugin: hapiDevErrors,
+      options: {
+        showErrors: process.env.NODE_ENV !== 'prod'
+      }
+    })
 
     await server.register({
       plugin: require('./lib/api'),
